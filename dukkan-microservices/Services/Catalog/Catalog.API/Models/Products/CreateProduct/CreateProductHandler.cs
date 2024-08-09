@@ -1,6 +1,7 @@
 // ReSharper disable NotAccessedPositionalProperty.Global
 
 using BuildingBlocks.CQRS;
+using FluentValidation;
 using Marten;
 
 // ReSharper disable ClassNeverInstantiated.Global
@@ -16,6 +17,17 @@ public record CreateProductCommand(
 ) : ICommand<CreateProductResult>;
 
 public record CreateProductResult(Guid Id);
+
+public class CreateProductCommandValidation : AbstractValidator<CreateProductCommand>
+{
+    public CreateProductCommandValidation()
+    {
+        RuleFor(p => p.Name).NotEmpty().WithMessage("Product Name Should be Filled");
+        RuleFor(p => p.Description).NotEmpty().WithMessage("Product Description Should be Filled");
+        RuleFor(p => p.Price).GreaterThanOrEqualTo(Decimal.Zero)
+            .WithMessage("Product Price should be greater than or equal to 0(zero)");
+    }
+}
 
 
 internal class CreateProductHandler(IDocumentSession session, ILogger<CreateProductHandler> logger) : ICommandHandler<CreateProductCommand, CreateProductResult>  
