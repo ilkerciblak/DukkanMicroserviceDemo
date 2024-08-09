@@ -1,6 +1,8 @@
 // ReSharper disable NotAccessedPositionalProperty.Global
 
 using BuildingBlocks.CQRS;
+using Marten;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace Catalog.API.Models.Products.CreateProduct;
@@ -13,19 +15,21 @@ public record CreateProductCommand(
     string ImageFile
 ) : ICommand<CreateProductResult>;
 
-public record CreateProductResult(Guid Identifier);
+public record CreateProductResult(Guid Id);
 
 
-internal class CreateProductHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
+internal class CreateProductHandler(IDocumentSession session, ILogger<CreateProductHandler> logger) : ICommandHandler<CreateProductCommand, CreateProductResult>  
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
         
-        Console.WriteLine(command);
+        logger.LogInformation("CreateProductHandler triggered with {@Command}", command);
         var product = Product.FromCreateProductCommand(command: command);
         
         // DB Operation : Skipped for now
-
-        return new CreateProductResult(Guid.NewGuid());
+        session.Store<Product>(product);
+        await session.SaveChangesAsync(cancellationToken);
+        
+        return new CreateProductResult(product.Id);
     }
 }

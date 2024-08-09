@@ -9,7 +9,7 @@ public record CreateProductRequest(
     string ImageFile
 );
 
-public record CreateProductResponse(Guid Identifier);
+public record CreateProductResponse(Guid Id);
 
 
 public class CreateProductEndpoint : ICarterModule
@@ -24,7 +24,7 @@ public class CreateProductEndpoint : ICarterModule
                     var result = await sender.Send(command);
                     var response = result.Adapt<CreateProductResponse>();
 
-                    return Results.Created($"/products/{response.Identifier}", response);
+                    return Results.Created($"/products/{response.Id}", response);
                 })
             .WithName("CreateProduct")
             .WithDescription("Create Product Description")
