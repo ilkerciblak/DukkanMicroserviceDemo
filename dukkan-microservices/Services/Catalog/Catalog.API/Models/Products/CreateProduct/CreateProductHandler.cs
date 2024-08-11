@@ -1,10 +1,9 @@
-// ReSharper disable NotAccessedPositionalProperty.Global
 
 using BuildingBlocks.CQRS;
 using FluentValidation;
 using Marten;
 
-// ReSharper disable ClassNeverInstantiated.Global
+
 
 namespace Catalog.API.Models.Products.CreateProduct;
 
@@ -38,8 +37,7 @@ internal class CreateProductHandler(IDocumentSession session, ILogger<CreateProd
         logger.LogInformation("CreateProductHandler triggered with {@Command}", command);
         var product = Product.FromCreateProductCommand(command: command);
         
-        // DB Operation : Skipped for now
-        session.Store<Product>(product);
+        session.Store(product);
         await session.SaveChangesAsync(cancellationToken);
         
         return new CreateProductResult(product.Id);
