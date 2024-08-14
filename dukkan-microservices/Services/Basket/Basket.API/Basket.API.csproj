@@ -19,6 +19,18 @@
 
     <ItemGroup>
       <PackageReference Include="Carter" Version="8.2.1" />
+      <PackageReference Include="Grpc.AspNetCore" Version="2.65.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Protobuf Include="Protos\discount.proto">
+        <GrpcServices>Client</GrpcServices>
+        <Access>Public</Access>
+        <ProtoCompile>True</ProtoCompile>
+        <CompileOutputs>True</CompileOutputs>
+        <OutputDir>obj\Debug/net8.0/</OutputDir>
+        <Generator>MSBuild:Compile</Generator>
+      </Protobuf>
     </ItemGroup>
 
 </Project>
