@@ -1,38 +1,20 @@
 # This is a generated file. Not intended for manual editing.
 services:
-  catalog.api:
+  discount.grpc:
     build:
       context: "/Users/ilkerciblak/Development/edu/dotnet-educational/DukkanMicroserviceDemo/dukkan-microservices"
-      dockerfile: "Services/Catalog/Catalog.API/Dockerfile"
+      dockerfile: "Services/Discount/Discount.gRPC/Dockerfile"
       target: "base"
     command: []
     entrypoint:
     - "dotnet"
-    - "/app/bin/Debug/net8.0/Catalog.API.dll"
+    - "/app/bin/Debug/net8.0/Discount.gRPC.dll"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-    image: "catalog.api:dev"
+    image: "discount.grpc:dev"
     ports: []
     volumes:
     - "/Users/ilkerciblak/.nuget/packages:/home/app/.nuget/packages"
-    - "/Users/ilkerciblak/Development/edu/dotnet-educational/DukkanMicroserviceDemo/dukkan-microservices/Services/Catalog/Catalog.API:/app:rw"
-    - "/Users/ilkerciblak/Development/edu/dotnet-educational/DukkanMicroserviceDemo/dukkan-microservices:/src:rw"
-    working_dir: "/app"
-  sepet.api:
-    build:
-      context: "/Users/ilkerciblak/Development/edu/dotnet-educational/DukkanMicroserviceDemo/dukkan-microservices"
-      dockerfile: "Services/Basket/Basket.API/Dockerfile"
-      target: "base"
-    command: []
-    entrypoint:
-    - "dotnet"
-    - "/app/bin/Debug/net8.0/Basket.API.dll"
-    environment:
-      DOTNET_USE_POLLING_FILE_WATCHER: "true"
-    image: "sepet.api:dev"
-    ports: []
-    volumes:
-    - "/Users/ilkerciblak/.nuget/packages:/home/app/.nuget/packages"
-    - "/Users/ilkerciblak/Development/edu/dotnet-educational/DukkanMicroserviceDemo/dukkan-microservices/Services/Basket/Basket.API:/app:rw"
+    - "/Users/ilkerciblak/Development/edu/dotnet-educational/DukkanMicroserviceDemo/dukkan-microservices/Services/Discount/Discount.gRPC:/app:rw"
     - "/Users/ilkerciblak/Development/edu/dotnet-educational/DukkanMicroserviceDemo/dukkan-microservices:/src:rw"
     working_dir: "/app"
