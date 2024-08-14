@@ -18,3 +18,21 @@ services:
     - "/Users/ilkerciblak/Development/edu/dotnet-educational/DukkanMicroserviceDemo/dukkan-microservices/Services/Catalog/Catalog.API:/app:rw"
     - "/Users/ilkerciblak/Development/edu/dotnet-educational/DukkanMicroserviceDemo/dukkan-microservices:/src:rw"
     working_dir: "/app"
+  sepet.api:
+    build:
+      context: "/Users/ilkerciblak/Development/edu/dotnet-educational/DukkanMicroserviceDemo/dukkan-microservices"
+      dockerfile: "Services/Basket/Basket.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Basket.API.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "sepet.api:dev"
+    ports: []
+    volumes:
+    - "/Users/ilkerciblak/.nuget/packages:/home/app/.nuget/packages"
+    - "/Users/ilkerciblak/Development/edu/dotnet-educational/DukkanMicroserviceDemo/dukkan-microservices/Services/Basket/Basket.API:/app:rw"
+    - "/Users/ilkerciblak/Development/edu/dotnet-educational/DukkanMicroserviceDemo/dukkan-microservices:/src:rw"
+    working_dir: "/app"

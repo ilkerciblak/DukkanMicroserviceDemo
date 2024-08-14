@@ -44,33 +44,35 @@
     volumes:
       - postgres_basket:/var/lib/postgres/data
     
+  distributedcache:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    
+  sepet.api:
+    image: sepet.api
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Server=sepetdb;Port=5432;Database=BasketDb;User Id=postgres;Password=pass;Include Error Detail=true
+      - ConnectionStrings__Redis=distributedcache:6379
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=682862Ask
+    depends_on:
+      - sepetdb
+      - distributedcache
+    ports:
+      - "6001:8080"
+      - "6061:8081"
+    volumes:
+      - /Users/ilkerciblak/.microsoft/usersecrets:/home/app/.microsoft/usersecrets:ro
+      - ~/.aspnet/https:/https:ro
 volumes:
   postgres_catalog:
   postgres_basket:
-
-
-# Use postgres/example user/password credentials
-#version: '3.9'
-
-#services:
-#
-#  db:
-#    image: postgres
-#    restart: always
-#    # set shared memory limit when using docker-compose
-#    shm_size: 128mb
-#    # or set shared memory limit when deploy via swarm stack
-#    #volumes:
-#    #  - type: tmpfs
-#    #    target: /dev/shm
-#    #    tmpfs:
-#    #      size: 134217728 # 128*2^20 bytes = 128Mb
-#    environment:
-#      POSTGRES_PASSWORD: example
-#
-#  adminer:
-#    image: adminer
-#    restart: always
-#    ports:
-#      - 8080:8080
 
