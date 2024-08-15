@@ -61,7 +61,7 @@
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__Database=Server=sepetdb;Port=5432;Database=BasketDb;User Id=postgres;Password=pass;Include Error Detail=true
       - ConnectionStrings__Redis=distributedcache:6379
-      - GrpcSettings__DiscountUrl=http://discount.grpc:8080
+      - GrpcSettings__DiscountUrl=https://discount.grpc:8081
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=682862Ask
     depends_on:
