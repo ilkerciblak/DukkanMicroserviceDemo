@@ -37,8 +37,17 @@ services.AddScoped<IBasketRepository>(
 );
 
 services.AddGrpcClient<DiscountGrpcService.DiscountGrpcServiceClient>(options =>
-    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!
-    ));
+        options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!
+        ))
+    .ConfigurePrimaryHttpMessageHandler(() =>
+    {
+        var handler = new HttpClientHandler();
+        handler.ServerCertificateCustomValidationCallback =
+            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+        return handler;
+    });
+;
 
 services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 services.AddExceptionHandler<CustomExceptionHandler>();
